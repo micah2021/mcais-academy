@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MCAIS Academy | Learn to use medicines safely</title>
+<meta name="description" content="Short courses and a verified question-and-answer space on medicine safety, from pharmacists and doctors. Prototype by MCAIS.">
+<meta name="theme-color" content="#04052F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2304052F'/%3E%3Cpath d='M6 36h14l6-14 8 28 6-18 4 4h14' fill='none' stroke='%232196F3' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --midnight:#04052F; --midnight-2:#0B0E4A; --pulse:#2196F3; --pulse-deep:#0B6FCC;
+  --sky:#CFE8FB; --sky-soft:#E8F3FD; --chalk:#F4F8FC; --ink:#0B1530; --muted:#4A5878;
+  --alert:#B4400C; --alert-bg:#FDEFE7; --ok:#0E7C5A; --line:#D5E1EE;
+  --sans:'Sora',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--chalk);line-height:1.55;-webkit-text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:var(--pulse-deep)}
+h1,h2,h3{line-height:1.15;letter-spacing:-.015em;margin:0}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--pulse);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:#fff;color:var(--ink);padding:8px 12px;border-radius:6px;z-index:50}
+.skip:focus{left:8px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* header */
+.site-header{background:var(--midnight);color:#fff}
+.site-header .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;margin-right:auto}
+.brand img{height:40px;width:auto}
+.brand span{font-weight:600;font-size:1rem;letter-spacing:.01em}
+.nav{display:flex;gap:4px;align-items:center}
+.nav a{color:#DCE9F8;text-decoration:none;padding:8px 12px;border-radius:999px;font-size:.95rem}
+.nav a:hover{background:var(--midnight-2)}
+.nav a[aria-current="page"]{background:var(--pulse);color:var(--midnight);font-weight:600}
+.role{font:inherit;font-size:.85rem;border:1px solid #3A4FA0;background:transparent;color:#DCE9F8;padding:7px 12px;border-radius:999px;cursor:pointer}
+.role[aria-pressed="true"]{background:#fff;color:var(--midnight);border-color:#fff}
+.proto{background:var(--sky);color:var(--ink);font-size:.85rem}
+.proto .wrap{padding-top:8px;padding-bottom:8px}
+
+/* buttons */
+.btn{display:inline-block;font:inherit;font-weight:600;font-size:.98rem;text-decoration:none;border:0;border-radius:10px;padding:12px 20px;cursor:pointer;background:var(--pulse-deep);color:#fff}
+.btn:hover{background:#0958A3}
+.btn.on-dark{background:var(--pulse);color:var(--midnight)}
+.btn.on-dark:hover{background:#5BB4F7}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px #4A5FC0}
+.btn.ghost:hover{background:var(--midnight-2)}
+.btn.light{background:#fff;color:var(--pulse-deep);box-shadow:inset 0 0 0 2px var(--pulse-deep)}
+.btn.light:hover{background:var(--sky-soft)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* hero */
+.hero{background:var(--midnight);color:#fff;position:relative;overflow:hidden;padding:48px 0 130px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;position:relative;z-index:1}
+.hero h1{font-size:clamp(2rem,5.4vw,3.4rem);max-width:16ch}
+.hero p.lead{font-size:1.1rem;color:#C9D8EE;max-width:46ch;margin:20px 0 28px}
+.hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-ecg{position:absolute;left:0;right:0;bottom:18px;height:90px;z-index:0}
+.hero-ecg svg{width:100%;height:100%}
+.hero-ecg path{fill:none;stroke:var(--pulse);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;opacity:.9}
+@media (prefers-reduced-motion:no-preference){
+  .hero-ecg path{stroke-dasharray:100;stroke-dashoffset:100;animation:draw 2.6s ease-out .3s forwards}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+.sample-label{font-size:.8rem;color:#9FB6D9;margin:0 0 8px}
+
+/* thread */
+.thread{background:#fff;color:var(--ink);border-radius:14px;padding:20px;border:1px solid var(--line)}
+.thread + .thread{margin-top:14px}
+.thread h3{font-size:1.1rem;margin:6px 0 14px}
+.thread-meta{display:flex;gap:12px;font-size:.8rem;color:var(--muted)}
+.cat{color:var(--pulse-deep);font-weight:600}
+.answer{border-left:4px solid var(--pulse);background:var(--sky-soft);padding:12px 14px;border-radius:0 10px 10px 0;margin-top:10px}
+.answer p{margin:0;font-size:.95rem}
+.answer .who{margin-bottom:6px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--ok)}
+.badge svg{width:15px;height:15px}
+.pending{font-size:.9rem;color:var(--muted);background:var(--chalk);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin:0}
+.reply-form{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+
+/* sections */
+section.block{padding:56px 0}
+section.block h2{font-size:clamp(1.5rem,3.4vw,2.1rem);margin-bottom:10px}
+section.block .sub{color:var(--muted);max-width:56ch;margin-bottom:28px}
+.band{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;grid-template-columns:1fr 240px;gap:24px;align-items:center}
+.band + .band{margin-top:14px}
+.band h3{font-size:1.25rem;margin-bottom:6px}
+.band p{color:var(--muted);margin-bottom:12px;max-width:52ch}
+.aud{display:inline-block;font-size:.8rem;font-weight:600;background:var(--sky);color:#08305A;padding:3px 10px;border-radius:999px;margin-right:8px}
+.dur{font-size:.85rem;color:var(--muted)}
+.prog{text-align:left}
+.prog .pct{font-size:.85rem;color:var(--muted);margin:4px 0 12px}
+.soon{list-style:none;margin:28px 0 0;padding:0;border-top:1px solid var(--line)}
+.soon li{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}
+.soon strong{font-weight:600}
+.soon span{color:var(--muted);font-size:.9rem}
+
+.ecg{display:block;width:100%;height:52px}
+.ecg path{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.ecg-track{stroke:var(--sky)}
+.ecg-fill{stroke:var(--pulse-deep);transition:stroke-dashoffset .6s ease}
+.on-midnight .ecg-track{stroke:#1B2570}
+.on-midnight .ecg-fill{stroke:var(--pulse)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.safe-list{list-style:none;margin:0;padding:0}
+.safe-list li{padding:14px 0;border-bottom:1px solid var(--line)}
+.safe-list li:first-child{border-top:1px solid var(--line)}
+.safe-list strong{display:block;margin-bottom:2px}
+.safe-list span{color:var(--muted);font-size:.95rem}
+
+/* page heads */
+.page-head{background:var(--midnight);color:#fff;padding:36px 0 32px}
+.page-head h1{font-size:clamp(1.7rem,4.4vw,2.6rem);max-width:22ch}
+.page-head p{color:#C9D8EE;max-width:58ch;margin:12px 0 0}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.chip{font:inherit;font-size:.88rem;background:#fff;border:1px solid var(--line);color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--midnight);color:#fff;border-color:var(--midnight)}
+
+/* forms */
+label{font-weight:600;font-size:.92rem;display:block;margin-bottom:6px}
+textarea,select{width:100%;font:inherit;border:1px solid #9FB3CC;border-radius:10px;padding:11px 12px;background:#fff;color:var(--ink)}
+textarea{min-height:110px;resize:vertical}
+.field{margin-bottom:14px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;margin-bottom:14px}
+.check input{margin-top:4px;width:18px;height:18px}
+.check label{font-weight:400;margin:0}
+.notice{background:var(--alert-bg);border:1px solid #F1C2A6;border-left:5px solid var(--alert);border-radius:10px;padding:12px 14px;font-size:.92rem;margin-bottom:22px}
+.notice strong{color:var(--alert)}
+.ask-box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:34px}
+.ask-box h2{font-size:1.2rem;margin-bottom:12px}
+.err{color:var(--alert);font-size:.9rem;margin:-6px 0 12px}
+
+/* course */
+.course-grid{display:grid;grid-template-columns:260px 1fr;gap:36px;padding:32px 0 60px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;position:sticky;top:12px;align-self:start}
+.steps li{margin-bottom:6px}
+.steps a{display:flex;gap:10px;align-items:flex-start;text-decoration:none;color:var(--ink);padding:10px 12px;border-radius:10px;font-size:.93rem;border:1px solid transparent}
+.steps a:hover{background:#fff}
+.steps a[aria-current="step"]{background:#fff;border-color:var(--pulse-deep);font-weight:600}
+.steps .mark{flex:0 0 20px;height:20px;border-radius:50%;border:2px solid #9FB3CC;margin-top:1px;display:grid;place-items:center}
+.steps .done .mark{background:var(--ok);border-color:var(--ok)}
+.steps .done .mark svg{width:12px;height:12px;stroke:#fff}
+.lesson{background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(20px,4vw,40px)}
+.lesson h2{font-size:clamp(1.4rem,3vw,1.9rem);margin-bottom:18px}
+.lesson .prose p{font-family:var(--serif);font-size:1.18rem;line-height:1.7;max-width:62ch}
+.takeaway{margin-top:22px;background:var(--sky-soft);border-left:5px solid var(--pulse-deep);padding:14px 16px;border-radius:0 10px 10px 0;font-weight:600}
+.lesson-nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:28px}
+.q{border:0;padding:0;margin:0 0 22px}
+.q legend{font-weight:600;margin-bottom:10px;padding:0}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;cursor:pointer;font-weight:400}
+.opt input{margin-top:3px}
+.opt.right{border-color:var(--ok);background:#E7F6F0}
+.opt.wrong{border-color:var(--alert);background:var(--alert-bg)}
+.why{font-size:.92rem;color:var(--muted);margin:4px 0 0}
+.result{font-weight:600;margin:6px 0 16px}
+.crumb{font-size:.88rem;margin-bottom:12px;display:inline-block;color:#BBD0EE}
+.crumb:hover{color:#fff}
+
+footer{background:var(--midnight);color:#C9D8EE;padding:40px 0;font-size:.9rem}
+footer .wrap{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center}
+footer img{height:56px;width:auto}
+footer p{margin:0 0 6px}
+footer a{color:#8FC6F7}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--midnight);color:#fff;padding:12px 18px;border-radius:10px;font-size:.92rem;box-shadow:0 8px 24px rgba(4,5,47,.35);z-index:40;max-width:90vw}
+.toast[hidden]{display:none}
+
+@media (max-width:820px){
+  .hero-grid,.split,.course-grid{grid-template-columns:1fr}
+  .band{grid-template-columns:1fr}
+  .steps{position:static}
+  .hero{padding-bottom:120px}
+  footer .wrap{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="MCAIS Academy home"><img src="logo.png" alt="MCAIS"><span>Academy</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#/courses" data-nav="courses">Courses</a>
+      <a href="#/ask" data-nav="ask">Ask</a>
+    </nav>
+    <button class="role" type="button" data-action="role" aria-pressed="false" title="Prototype only: switch between a learner and a verified professional"></button>
+  </div>
+</header>
+<div class="proto"><div class="wrap">Prototype with sample content. Nothing here is medical advice, and every answer must be reviewed by licensed professionals before launch.</div></div>
+
+<main id="main" tabindex="-1"></main>
+
+<footer>
+  <div class="wrap">
+    <img src="logo.png" alt="MCAIS">
+    <div>
+      <p><strong>MCAIS</strong> (Munang Carecycles and IT Solutions). Academy is the learning and community layer next to MCAIS Connect.</p>
+      <p>Not for emergencies. If someone is seriously unwell, go to the nearest hospital.</p>
+      <p><button class="role" type="button" data-action="reset" style="border-color:#3A4FA0">Clear my progress and posts on this device</button></p>
+    </div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={
+  get(k,d){try{const v=localStorage.getItem('mcais_'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('mcais_'+k,JSON.stringify(v))}catch(e){}},
+  clear(){try{Object.keys(localStorage).filter(k=>k.indexOf('mcais_')===0).forEach(k=>localStorage.removeItem(k))}catch(e){}}
+};
+let progress=store.get('progress',{});
+let userThreads=store.get('threads',[]);
+let replies=store.get('replies',{});
+let role=store.get('role','learner');
+let filterCat='All', filterAud='All';
+
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+const SHIELD='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3zm-1 13.2l5.6-5.6-1.4-1.4L11 12.4l-2.2-2.2-1.4 1.4L11 15.2z"/></svg>';
+const ECG='M0 44 H118 L128 50 L140 22 L152 70 L166 28 L174 40 H400';
+function ecg(p,extra){
+  return '<svg class="ecg '+(extra||'')+'" viewBox="0 0 400 80" preserveAspectRatio="none" aria-hidden="true">'+
+    '<path class="ecg-track" d="'+ECG+'"/>'+
+    '<path class="ecg-fill" d="'+ECG+'" pathLength="100" stroke-dasharray="100" stroke-dashoffset="'+(100-p)+'"/></svg>';
+}
+
+/* ---------- content ---------- */
+const COURSES=[
+ {id:'safe-medicine-use',title:'Safe medicine use at home',aud:'Patients',min:20,
+  blurb:'Read labels, avoid double dosing, store medicines properly and use antibiotics the right way.',
+  lessons:[
+   {t:'Read the label before you take anything',p:[
+     'Every medicine label tells you three things you need before the first dose: what is in it, how much to take, and when to stop or ask for help. Start with the active ingredient, the name of the substance that does the work. Brand names change from product to product. The active ingredient does not.',
+     'Many cold, flu and pain products contain paracetamol. Taking two of them together can add up to more than the safe daily amount without you noticing. If two labels share an active ingredient, take only one and ask a pharmacist which suits you.'],
+    k:'Match the active ingredients across every product you take.'},
+   {t:'A prescription is for one person',p:[
+     'Your dose was chosen for your age, weight, other illnesses and the other medicines you take. The same tablet can be the wrong choice for a family member who has similar symptoms.',
+     'Do not share prescription medicines, and do not keep leftovers to treat the next illness. If symptoms come back, go back to the prescriber or pharmacist.'],
+    k:'Leftovers are not a plan. Ask again.'},
+   {t:'Store and throw away medicines properly',p:[
+     'Keep medicines in their original container, in a cool, dry place away from direct sunlight and out of children\u2019s reach. A bathroom shelf is warm and damp, which makes it a poor place for tablets.',
+     'Check expiry dates every few months. Do not use expired or damaged medicines. Ask a pharmacy how to dispose of them.'],
+    k:'Cool, dry, closed, and out of reach.'},
+   {t:'Take antibiotics exactly as prescribed',p:[
+     'Antibiotics treat bacterial infections, not colds and flu caused by viruses. Using them when they are not needed, or not as directed, helps bacteria become resistant, which makes future infections harder to treat.',
+     'Take the dose, and for the number of days, that your prescriber gave you. Do not change the course on your own. If you are not improving or feel worse, contact your prescriber.'],
+    k:'Follow the prescription exactly, and ask before changing it.'}],
+  quiz:[
+   {q:'Your cold-and-flu sachet and your headache tablet both list paracetamol. What should you do?',o:['Take both, they treat different symptoms','Take only one and ask a pharmacist which suits you','Take half of each'],a:1,w:'Both contain the same active ingredient, so taking both risks doubling the dose.'},
+   {q:'Where is the best place to keep tablets at home?',o:['On the bathroom shelf','In a cool, dry place away from sunlight and children','In the car, in case of emergencies'],a:1,w:'Heat, damp and sunlight can damage medicines, and children must not reach them.'},
+   {q:'Your sister has the same symptoms you had last month. What is the safest choice?',o:['Give her your leftover antibiotics','Share half of the leftover tablets','Have her see a clinic or pharmacist'],a:2,w:'Prescriptions are chosen for one person. A clinician or pharmacist can check what she needs.'}]},
+ {id:'drug-interactions',title:'Drug interactions in plain language',aud:'Patients',min:25,
+  blurb:'What an interaction is, the patterns that matter most, and what to do when a checker shows a warning.',
+  lessons:[
+   {t:'What an interaction is',p:[
+     'An interaction happens when one substance changes how another one works, or what side effects it causes. The substances can be prescription medicines, over-the-counter tablets, herbal mixtures, alcohol, or some foods.',
+     'Not every interaction is dangerous. Some are minor, some need a dose change, and a few mean two medicines should not be taken together. A pharmacist can tell the difference. Guessing cannot.'],
+    k:'An interaction is a reason to ask, not always a reason to panic.'},
+   {t:'Patterns worth knowing',p:[
+     'Stacking the same effect: two medicines that both lower blood pressure, or both make you drowsy, can push the effect too far. Alcohol adds to the drowsiness caused by many medicines.',
+     'Raising bleeding risk: pain relievers such as ibuprofen and diclofenac can increase the risk of bleeding in people who take blood thinners such as warfarin. Anyone on a blood thinner should ask before using a new painkiller.',
+     'Herbal and \u201Cnatural\u201D products are active substances too. Some change how prescription medicines are absorbed or broken down, so tell your pharmacist about them.'],
+    k:'Same effect twice, bleeding risk, and herbal products are the big three.'},
+   {t:'Keep one list and share it',p:[
+     'Write down everything you take: prescription medicines, over-the-counter products, herbal mixtures and vitamins. Include the dose and how often. Update the list whenever something changes.',
+     'Show the list at every appointment and every pharmacy visit, including with a new provider. It is the most useful single step you can take to prevent an interaction.'],
+    k:'One list, always up to date, always shown.'},
+   {t:'What to do when a checker shows a warning',p:[
+     'A warning from an interaction checker is a reason to ask. Do not stop a prescribed medicine on your own, because stopping can also cause harm. Contact your pharmacist or doctor and show them the warning.',
+     'Go to the nearest hospital or emergency service straight away if you have trouble breathing, swelling of the face or throat, chest pain, fainting, vomiting blood or black stools.'],
+    k:'Warning means ask. Emergency signs mean go now.'}],
+  quiz:[
+   {q:'A relative on warfarin has joint pain. What is the right first step?',o:['Give ibuprofen, it is a common painkiller','Ask their doctor or pharmacist which painkiller is safe','Double the warfarin to help'],a:1,w:'Some painkillers raise bleeding risk with warfarin, so their care team should choose.'},
+   {q:'An interaction checker shows a warning for two of your medicines. What should you do?',o:['Stop both at once','Ignore it, checkers are often wrong','Contact your pharmacist or doctor and show them the warning'],a:2,w:'Stopping prescribed medicines alone can cause harm. A professional can judge the risk.'},
+   {q:'Which belongs on your medicine list?',o:['Only prescription medicines','Prescription, over-the-counter and herbal products','Only the ones you take every day'],a:1,w:'Any substance can interact, so the list must be complete.'}]},
+ {id:'chw-bp-diabetes',title:'Blood pressure and diabetes basics for community health workers',aud:'Community health workers',min:40,soon:true,
+  blurb:'Measuring blood pressure, spotting warning signs and supporting patients to keep taking their medicines.'},
+ {id:'counselling',title:'Medication counselling at the pharmacy counter',aud:'Pharmacists',min:35,soon:true,
+  blurb:'Structured conversations that catch interactions and help patients understand what they are taking.'},
+ {id:'telehealth-consent',title:'Consent and data privacy in telehealth',aud:'Doctors',min:30,soon:true,
+  blurb:'What patients must be told, what you must record, and how the NDPA 2023 applies to online consultations.'}
+];
+const AUDS=['All','Patients','Community health workers','Pharmacists','Doctors'];
+const CATS=['All','Interactions','Everyday medicines','Long-term conditions'];
+
+const SEED=[
+ {id:'s1',cat:'Everyday medicines',q:'I have malaria tablets from the chemist and a headache. Can I take paracetamol too?',answers:[
+   {by:'Verified pharmacist (sample)',text:'Paracetamol is commonly used for fever and headache during malaria treatment, but only take the dose on its label and never more than the daily maximum. Check that no other product you take, such as a cold-and-flu mix, also contains paracetamol. Fever with malaria symptoms should be tested and treated by a clinician, so go to a clinic if you get worse.'}]},
+ {id:'s2',cat:'Interactions',q:'My father takes warfarin and now has joint pain. Is ibuprofen okay for him?',answers:[
+   {by:'Verified pharmacist (sample)',text:'Ibuprofen and similar painkillers can raise the risk of bleeding when combined with warfarin, so please do not start them without asking his doctor or pharmacist. His care team can tell you which pain relief is suitable for him and at what dose.'}]},
+ {id:'s3',cat:'Everyday medicines',q:'Can I drink alcohol while taking an antibiotic?',answers:[
+   {by:'Verified doctor (sample)',text:'It depends on the antibiotic. The label of some, such as metronidazole, warns against alcohol because it can cause severe nausea and vomiting. Even with others, alcohol can worsen side effects. Ask your pharmacist about your specific antibiotic, and avoid alcohol until you have checked.'}]},
+ {id:'s4',cat:'Interactions',q:'Is it safe to use a herbal mixture together with my blood pressure tablets?',answers:[]}
+];
+
+/* ---------- state helpers ---------- */
+function pct(c){
+  const p=progress[c.id]; if(!p) return 0;
+  const total=c.lessons.length+1;
+  return Math.round((((p.done||[]).length)+(p.quiz?1:0))/total*100);
+}
+function allThreads(){return userThreads.slice().reverse().concat(SEED)}
+function when(t){
+  if(!t.ts) return 'Sample question';
+  const m=Math.round((Date.now()-t.ts)/60000);
+  if(m<1) return 'Just now'; if(m<60) return m+' min ago';
+  const h=Math.round(m/60); if(h<24) return h+' h ago';
+  return new Date(t.ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.hidden=false;
+  clearTimeout(toast._t); toast._t=setTimeout(()=>{t.hidden=true},3200);
+}
+function syncRole(){
+  const b=document.querySelector('[data-action="role"]');
+  b.setAttribute('aria-pressed',role==='pro');
+  b.textContent=role==='pro'?'Viewing as: verified professional (demo)':'Viewing as: learner';
+}
+
+/* ---------- views ---------- */
+function threadHTML(t,compact){
+  const rs=(t.answers||[]).concat(replies[t.id]||[]);
+  return '<article class="thread" id="t-'+esc(t.id)+'">'+
+    '<div class="thread-meta"><span class="cat">'+esc(t.cat)+'</span><span>'+esc(when(t))+'</span></div>'+
+    '<h3>'+esc(t.q)+'</h3>'+
+    (rs.length?rs.map(a=>'<div class="answer"><p class="who"><span class="badge">'+SHIELD+esc(a.by)+'</span></p><p>'+esc(a.text)+'</p></div>').join('')
+      :'<p class="pending">Waiting for a pharmacist or doctor to answer.</p>')+
+    (role==='pro'&&!compact?
+      '<form class="reply-form" data-reply="'+esc(t.id)+'">'+
+      '<div class="field"><label for="r-'+esc(t.id)+'">Answer as a verified professional (demo)</label>'+
+      '<textarea id="r-'+esc(t.id)+'" name="text" required minlength="20" placeholder="Give general safety information. Do not diagnose. Point to emergency care when needed."></textarea></div>'+
+      '<div class="field"><label for="k-'+esc(t.id)+'">Your role</label><select id="k-'+esc(t.id)+'" name="kind"><option>pharmacist</option><option>doctor</option></select></div>'+
+      '<button class="btn" type="submit">Post answer</button></form>':'')+
+    '</article>';
+}
+
+function viewHome(){
+  const feat=COURSES.filter(c=>!c.soon), soon=COURSES.filter(c=>c.soon);
+  return '<section class="hero"><div class="wrap hero-grid">'+
+    '<div><h1>Learn to use medicines safely, from pharmacists and doctors.</h1>'+
+    '<p class="lead">Short courses and a verified question-and-answer space for patients, community health workers and clinicians.</p>'+
+    '<div class="actions"><a class="btn on-dark" href="#/courses">Start a course</a><a class="btn ghost" href="#/ask">Ask a pharmacist</a></div></div>'+
+    '<div><p class="sample-label">A recent question</p>'+threadHTML(SEED[1],true)+'</div></div>'+
+    '<div class="hero-ecg" aria-hidden="true"><svg viewBox="0 0 1200 90" preserveAspectRatio="none"><path pathLength="100" d="M0 52 H420 L440 60 L470 20 L505 82 L545 34 L565 52 H1200"/></svg></div></section>'+
+  '<section class="block"><div class="wrap"><h2>Courses you can finish in one sitting</h2>'+
+    '<p class="sub">Each course ends with a short check so you know what stuck. Your progress is saved on this device.</p>'+
+    feat.map(bandHTML).join('')+
+    '<ul class="soon" aria-label="Courses in development">'+soon.map(c=>'<li><strong>'+esc(c.title)+'</strong><span>'+esc(c.aud)+' &middot; in development</span></li>').join('')+'</ul>'+
+  '</div></section>'+
+  '<section class="block" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap split">'+
+    '<div><h2>Ask a question, get an answer from a verified professional</h2>'+
+    '<p class="sub">Public threads on medicines, side effects and interactions. Every answer shows who gave it and what their role is.</p>'+
+    '<a class="btn" href="#/ask">Browse and ask</a></div>'+
+    '<div>'+allThreads().filter(t=>t.answers&&t.answers.length).slice(0,2).map(t=>threadHTML(t,true)).join('')+'</div></div></section>'+
+  '<section class="block"><div class="wrap split"><div><h2>How answers stay safe</h2><p class="sub">The rules this platform is designed around.</p></div>'+
+    '<ul class="safe-list">'+
+    '<li><strong>Only verified professionals answer.</strong><span>Pharmacist and doctor licences are checked before an account can post answers.</span></li>'+
+    '<li><strong>General safety information, not diagnosis.</strong><span>Public threads explain how medicines work. Personal treatment decisions move to a private consultation on MCAIS Connect.</span></li>'+
+    '<li><strong>Emergencies go to care.</strong><span>Every ask page tells people to go to the nearest hospital for urgent symptoms.</span></li>'+
+    '<li><strong>Privacy first.</strong><span>People are asked to leave out names, phone numbers and addresses, in line with the NDPA 2023.</span></li></ul></div></section>';
+}
+
+function bandHTML(c){
+  const p=pct(c);
+  return '<div class="band"><div><div><span class="aud">'+esc(c.aud)+'</span><span class="dur">About '+c.min+' minutes &middot; '+c.lessons.length+' lessons</span></div>'+
+    '<h3 style="margin-top:10px">'+esc(c.title)+'</h3><p>'+esc(c.blurb)+'</p></div>'+
+    '<div class="prog">'+ecg(p)+'<p class="pct">'+(p===100?'Completed':p>0?p+'% complete':'Not started')+'</p>'+
+    '<a class="btn" href="#/course/'+c.id+'/0">'+(p===100?'Review course':p>0?'Continue':'Start course')+'</a></div></div>';
+}
+
+function viewCourses(){
+  const list=COURSES.filter(c=>filterAud==='All'||c.aud===filterAud);
+  return '<section class="page-head"><div class="wrap"><h1>Courses</h1><p>Plain-language lessons you can finish on a phone. Choose the track that fits you.</p></div></section>'+
+  '<section class="block"><div class="wrap"><div class="chips" role="group" aria-label="Filter by audience">'+
+    AUDS.map(a=>'<button class="chip" type="button" data-action="filter-aud" data-v="'+esc(a)+'" aria-pressed="'+(a===filterAud)+'">'+esc(a)+'</button>').join('')+'</div>'+
+    (list.length?list.map(c=>c.soon?
+      '<div class="band"><div><span class="aud">'+esc(c.aud)+'</span><span class="dur">In development</span><h3 style="margin-top:10px">'+esc(c.title)+'</h3><p>'+esc(c.blurb)+'</p></div><div><span class="dur">Not open yet. Content is being written with licensed professionals.</span></div></div>'
+      :bandHTML(c)).join(''):'<p>No courses for this audience yet.</p>')+
+  '</div></section>';
+}
+
+function viewCourse(id,idx){
+  const c=COURSES.find(x=>x.id===id);
+  if(!c||c.soon) return '<section class="block"><div class="wrap"><h1>Course not found</h1><p class="sub" style="margin-top:12px">That course is not available yet.</p><a class="btn" href="#/courses">Back to courses</a></div></section>';
+  const n=c.lessons.length; idx=Math.max(0,Math.min(isNaN(idx)?0:idx,n));
+  const p=progress[c.id]||{done:[],quiz:false}; const done=p.done||[];
+  const steps=c.lessons.map((l,i)=>[l.t,done.indexOf(i)>-1,i]).concat([['Check your understanding',!!p.quiz,n]]);
+  let body;
+  if(idx<n){
+    const l=c.lessons[idx];
+    body='<h2>'+esc(l.t)+'</h2><div class="prose">'+l.p.map(x=>'<p>'+esc(x)+'</p>').join('')+'</div><div class="takeaway">'+esc(l.k)+'</div>'+
+      '<div class="lesson-nav">'+(idx>0?'<a class="btn light" href="#/course/'+c.id+'/'+(idx-1)+'">Previous</a>':'<span></span>')+
+      '<button class="btn" type="button" data-action="complete" data-course="'+c.id+'" data-i="'+idx+'">'+(idx===n-1?'Mark complete and take the check':'Mark complete and continue')+'</button></div>';
+  }else{
+    body='<h2>Check your understanding</h2><form data-quiz="'+c.id+'" novalidate>'+
+      c.quiz.map((q,qi)=>'<fieldset class="q"><legend>'+esc(q.q)+'</legend>'+q.o.map((o,oi)=>'<label class="opt"><input type="radio" name="q'+qi+'" value="'+oi+'"> <span>'+esc(o)+'</span></label>').join('')+'<p class="why" hidden></p></fieldset>').join('')+
+      '<p class="result" role="status"></p><button class="btn" type="submit">Check answers</button></form>'+
+      (p.quiz?'<p class="takeaway">You have completed this course. You can retake the check any time.</p>':'')+
+      '<div class="lesson-nav"><a class="btn light" href="#/course/'+c.id+'/'+(n-1)+'">Previous lesson</a><a class="btn light" href="#/courses">All courses</a></div>';
+  }
+  return '<section class="page-head on-midnight"><div class="wrap"><a class="crumb" href="#/courses">Courses</a><h1>'+esc(c.title)+'</h1>'+
+    '<div style="max-width:420px;margin-top:18px">'+ecg(pct(c))+'<p style="margin:6px 0 0;font-size:.88rem;color:#C9D8EE">'+pct(c)+'% complete</p></div></div></section>'+
+  '<div class="wrap course-grid"><ol class="steps" aria-label="Lessons">'+
+    steps.map(s=>'<li class="'+(s[1]?'done':'')+'"><a href="#/course/'+c.id+'/'+s[2]+'"'+(s[2]===idx?' aria-current="step"':'')+'><span class="mark">'+(s[1]?CHECK:'')+'</span><span>'+esc(s[0])+(s[1]?'<span class="sr" style="position:absolute;left:-999px"> (done)</span>':'')+'</span></a></li>').join('')+'</ol>'+
+  '<div class="lesson">'+body+'</div></div>';
+}
+
+function viewAsk(){
+  const list=allThreads().filter(t=>filterCat==='All'||t.cat===filterCat);
+  return '<section class="page-head"><div class="wrap"><h1>Ask a pharmacist or doctor</h1><p>Ask about medicines, side effects and interactions. Questions are public, so leave out your name, phone number and address.</p></div></section>'+
+  '<section class="block"><div class="wrap">'+
+  '<div class="notice"><strong>Not for emergencies.</strong> If someone has trouble breathing, chest pain, swelling of the face or throat, or has taken too much of a medicine, go to the nearest hospital now. Do not post here.</div>'+
+  '<form class="ask-box" id="ask-form" novalidate><h2>Post a question</h2>'+
+    '<div class="field"><label for="ask-q">Your question</label><textarea id="ask-q" name="q" placeholder="For example: Can I take my blood pressure tablet with a herbal tea?"></textarea></div>'+
+    '<div class="field"><label for="ask-cat">Topic</label><select id="ask-cat" name="cat">'+CATS.slice(1).map(c=>'<option>'+esc(c)+'</option>').join('')+'</select></div>'+
+    '<div class="check"><input type="checkbox" id="ask-ok" name="ok"><label for="ask-ok">This is not an emergency, and my question does not include personal details.</label></div>'+
+    '<p class="err" id="ask-err" role="alert" hidden></p><button class="btn" type="submit">Post question</button></form>'+
+  '<div class="chips" role="group" aria-label="Filter by topic">'+CATS.map(c=>'<button class="chip" type="button" data-action="filter-cat" data-v="'+esc(c)+'" aria-pressed="'+(c===filterCat)+'">'+esc(c)+'</button>').join('')+'</div>'+
+  (role==='pro'?'<p class="dur" style="margin-bottom:14px">Demo mode: you can answer any question below. In the real product this view is limited to verified accounts.</p>':'')+
+  (list.length?list.map(t=>threadHTML(t,false)).join(''):'<p>No questions in this topic yet.</p>')+
+  '</div></section>';
+}
+
+/* ---------- router ---------- */
+function render(){
+  const parts=(location.hash.slice(1)||'/').split('/'); // ['', page, arg, arg2]
+  const page=parts[1]||'', main=$('#main');
+  let html;
+  if(page==='courses') html=viewCourses();
+  else if(page==='course') html=viewCourse(parts[2],parseInt(parts[3],10)||0);
+  else if(page==='ask') html=viewAsk();
+  else html=viewHome();
+  main.innerHTML=html;
+  document.querySelectorAll('[data-nav]').forEach(a=>{
+    const on=(a.dataset.nav===page)||(a.dataset.nav==='courses'&&page==='course');
+    if(on) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });
+  syncRole();
+}
+let lastKey='';
+window.addEventListener('hashchange',()=>{
+  const key=location.hash; render();
+  if(key!==lastKey){window.scrollTo(0,0);$('#main').focus({preventScroll:true})}
+  lastKey=key;
+});
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-action]'); if(!b) return;
+  const a=b.dataset.action;
+  if(a==='role'){role=role==='pro'?'learner':'pro';store.set('role',role);render();}
+  else if(a==='filter-cat'){filterCat=b.dataset.v;render();const f=document.querySelector('[data-action="filter-cat"][aria-pressed="true"]');f&&f.focus();}
+  else if(a==='filter-aud'){filterAud=b.dataset.v;render();const f=document.querySelector('[data-action="filter-aud"][aria-pressed="true"]');f&&f.focus();}
+  else if(a==='complete'){
+    const id=b.dataset.course, i=parseInt(b.dataset.i,10);
+    const p=progress[id]||(progress[id]={done:[],quiz:false});
+    if(p.done.indexOf(i)<0) p.done.push(i);
+    store.set('progress',progress);
+    location.hash='#/course/'+id+'/'+(i+1);
+  }
+  else if(a==='reset'){
+    if(confirm('Clear your course progress and posted questions on this device?')){
+      store.clear(); progress={};userThreads=[];replies={};role='learner';render();toast('Cleared.');
+    }
+  }
+});
+
+document.addEventListener('submit',e=>{
+  const f=e.target;
+  if(f.id==='ask-form'){
+    e.preventDefault();
+    const q=f.q.value.trim(), err=$('#ask-err');
+    let msg='';
+    if(q.length<15) msg='Write at least a full sentence so a professional can help.';
+    else if(!f.ok.checked) msg='Confirm that this is not an emergency and has no personal details.';
+    if(msg){err.textContent=msg;err.hidden=false;return;}
+    userThreads.push({id:'u'+Date.now(),cat:f.cat.value,q:q,answers:[],ts:Date.now()});
+    store.set('threads',userThreads); filterCat='All'; render(); toast('Question posted. A pharmacist or doctor will answer.');
+  }
+  else if(f.dataset.reply){
+    e.preventDefault();
+    const text=f.text.value.trim(); if(text.length<20){toast('Write a fuller answer first.');return;}
+    (replies[f.dataset.reply]=replies[f.dataset.reply]||[]).push({by:'Verified '+f.kind.value+' (demo)',text:text});
+    store.set('replies',replies); render(); toast('Answer posted.');
+  }
+  else if(f.dataset.quiz){
+    e.preventDefault();
+    const c=COURSES.find(x=>x.id===f.dataset.quiz); let score=0, unanswered=false;
+    c.quiz.forEach((q,qi)=>{
+      const fs=f.querySelectorAll('fieldset')[qi], sel=f.querySelector('input[name="q'+qi+'"]:checked');
+      const opts=fs.querySelectorAll('.opt'), why=fs.querySelector('.why');
+      opts.forEach(o=>o.classList.remove('right','wrong'));
+      if(!sel){unanswered=true;return;}
+      const v=parseInt(sel.value,10);
+      if(v===q.a){score++;opts[v].classList.add('right');}
+      else{opts[v].classList.add('wrong');opts[q.a].classList.add('right');}
+      why.textContent=q.w; why.hidden=false;
+    });
+    const res=f.querySelector('.result');
+    if(unanswered){res.textContent='Answer every question, then check again.';return;}
+    if(score===c.quiz.length){
+      const p=progress[c.id]||(progress[c.id]={done:[],quiz:false}); p.quiz=true; store.set('progress',progress);
+      res.textContent='All '+score+' correct. Course complete.';
+      const h=document.querySelector('.page-head .ecg-fill'); if(h) h.setAttribute('stroke-dashoffset',0);
+    }else{
+      res.textContent=score+' of '+c.quiz.length+' correct. Review the explanations, then try again.';
+    }
+  }
+});
+
+syncRole(); render(); lastKey=location.hash;
+})();
+</script>
+</body>
+</html>
